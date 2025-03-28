@@ -10,8 +10,8 @@ let calendar: calendar_v3.Calendar | undefined;
  */
 async function getCalendarClient(): Promise<calendar_v3.Calendar> {
   if (!authClient || !calendar) {
-    const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-    const privateKey = process.env.GOOGLE_PRIVATE_KEY;
+    const clientEmail = process.env.GOOGLE_SERVICE_ACCOUNT_CLIENT_EMAIL;
+    const privateKey = process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY;
 
     if (!clientEmail || !privateKey) {
       throw new Error('Google service account credentials are not set in environment');
