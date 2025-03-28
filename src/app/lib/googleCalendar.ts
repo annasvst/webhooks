@@ -41,6 +41,8 @@ export async function addAttendeeToEvent(
   eventId: string,
   userEmail: string
 ): Promise<calendar_v3.Schema$Event> {
+  console.log("Updating calendar event...");
+
   const cal = await getCalendarClient();
   const calendarId = process.env.GOOGLE_CALENDAR_ID;
 
@@ -51,10 +53,12 @@ export async function addAttendeeToEvent(
   try {
     const existingEvent = await cal.events.get({ calendarId, eventId });
     const attendees = existingEvent.data.attendees || [];
+    console.log("Current number of attendees", attendees.length);
 
     if (!attendees.some((a) => a.email === userEmail)) {
       attendees.push({ email: userEmail });
     }
+    console.log("Updated number of attendees", attendees);
 
     const response = await cal.events.patch({
       calendarId,
@@ -64,7 +68,7 @@ export async function addAttendeeToEvent(
       },
     });
 
-    console.log('Updated event attendees:', response.data.attendees);
+    console.log('Updated event attendees:', response.data.attendees?.length);
     return response.data;
   } catch (error) {
     console.error('Error adding attendee to event:', error);

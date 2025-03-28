@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
-import { addAttendeeToEvent } from '@/lib/googleCalendar';
+import { addAttendeeToEvent } from '@/app/lib/googleCalendar';
 
 export const runtime = 'nodejs'; 
 
